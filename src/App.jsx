@@ -5,16 +5,16 @@ import { IoUmbrellaOutline } from "react-icons/io5";
 import './App.css'
 
 function App() {
-  useEffect(() => {
-    (async () => {
-      const data = await axios.get('./F-C0032-001.json');
-      // const data = await axios.get('https://github.com/coffeeteacher/weather/F-C0032-001.json');
+  // useEffect(() => {
+  //   (async () => {
+  //     const data = await axios.get('./F-C0032-001.json');
+  //     // const data = await axios.get('https://github.com/coffeeteacher/weather/F-C0032-001.json');
       
-      const { location } = data.data.cwaopendata.dataset;
-      const options = { hour: 'numeric', minute: 'numeric' }
-      console.log(location);
-    })()
-  }, [])
+  //     const { location } = data.data.cwaopendata.dataset;
+  //     const options = { hour: 'numeric', minute: 'numeric' }
+  //     console.log(location);
+  //   })()
+  // }, [])
 
   return (
     <>
