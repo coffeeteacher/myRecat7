@@ -1,0 +1,101 @@
+*{
+    margin: 0;
+    padding: 0;    
+}
+
+header img{
+    width: 100%;
+}
+
+/* 特色 */
+.content{        
+    display: flex;
+    justify-content:space-around;
+    width: 80%;
+    margin: 50px auto;    
+}
+.content .box{
+    width: 300px;
+    text-align: center;
+}
+.content .box h2{
+    color: red;;
+}
+
+.content .box p{
+    color: #888;
+    line-height: 1.5;
+}
+
+/* 主標 */
+.slogan{
+    background-color: red;
+    color: white;
+    width: 100%;
+    text-align: center;
+    /* padding-top: 10px; */
+    /* padding-bottom: 10px; */
+    line-height: 50px;
+}
+
+/* 推薦課程 */
+.content2 h1{
+    color: green;
+    text-align: center;
+    line-height: 100px;
+}
+
+.content2 .contentClass{
+    display: flex;
+    justify-content: space-around;
+    width: 80%;
+    margin: 50px auto;
+}
+
+.content2 .contentClass .box2{
+    width: 300px;
+    /* 陰影：水平 垂直 擴展度 色彩 */
+    box-shadow: 0 0 10px #ccc;
+    padding: 10px;
+
+}
+.content2 .contentClass .box2 img{
+    width: 100%;
+}
+.content2 .contentClass .box2 h3{
+    font-size: 20px;
+}
+.content2 .contentClass .box2 .p-blue{
+    line-height: 1.2;
+    color: #00b3ff;
+}
+.content2 .contentClass .box2 p{
+    color: #666;
+}
+.content2 .contentClass .box2 .span1{
+    color: #666;
+    text-decoration: line-through;
+}
+.content2 .contentClass .box2 .span2{
+    color: red;
+    font-size: 18px;
+    margin-left: 5px;
+}
+.content2 .contentClass .box2 button{
+    background-color: red;
+    color: white;
+    border: none;
+    width: 100%;
+    line-height: 40px;
+    border-radius: 5px;
+    margin-top: 20px;
+}
+
+/* 頁尾 */
+footer{
+    background-color: #333;
+    color: white;
+    line-height: 50px;
+    text-align: center;
+    width: 100%;
+}
