@@ -41,7 +41,8 @@ function App() {
                         下午6:00
                       </p>
                       <p>
-                        <img src="./public/weatherIcon/晴時多雲.svg" alt="" />
+                        {/* <img src="./public/weatherIcon/晴時多雲.svg" alt="" /> */}
+                        <img src="weatherIcon/晴時多雲.svg" alt="" />
                       </p>
                       <p>晴時多雲</p>
                       <p><IoUmbrellaOutline />10%</p>
@@ -55,7 +56,7 @@ function App() {
                         下午6:00
                       </p>
                       <p>
-                        <img src="./public/weatherIcon/晴時多雲.svg" alt="" />
+                        <img src="weatherIcon/晴時多雲.svg" alt="" />
                       </p>
                       <p>晴時多雲</p>
                       <p><IoUmbrellaOutline />10%</p>
