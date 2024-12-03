@@ -3,7 +3,6 @@ import axios from 'axios'
 import { IoUmbrellaOutline } from "react-icons/io5";
 
 import './App.css'
-import { CgHello } from "react-icons/cg";
 
 function App() {
   const [weatherList, setWeatherList] = useState([]);
