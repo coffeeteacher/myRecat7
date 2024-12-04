@@ -40,7 +40,6 @@ function App() {
                         return (
                           <div key={index}>
                             {/* 日期 */}
-                            {/* <p>2日</p> */}
                             <p>
                               {
                                 new Date(time.startTime).toLocaleString(undefined, {
@@ -49,11 +48,6 @@ function App() {
                               }
                             </p>
                             {/* 時間 */}
-                            {/* <p>
-                      上午6:00<br />
-                      ~<br />
-                      下午6:00
-                    </p> */}
                             <p>
                               {
                                 // 開始時間
@@ -72,19 +66,15 @@ function App() {
                               }
                             </p>
                             {/* 天氣圖 */}
-                            {/* <p><img src="./weatherIcon/晴時多雲.svg" alt="" /></p> */}
                             <p><img src={`./weatherIcon/${time.parameter.parameterName}.svg`} alt="" /></p>
                             {/* 天氣圖名稱 */}
-                            {/* <p>晴時多雲</p> */}
                             <p>{time.parameter.parameterName}</p>
                             {/* 降雨率 */}
-                            {/* <p><IoUmbrellaOutline />10%</p> */}
                             <p><IoUmbrellaOutline />{city.weatherElement[4].time[index].parameter.parameterName}</p>
                           </div>
                         )
                       })
                     }
-
                   </div>
                 </div>
               )
