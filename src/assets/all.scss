@@ -1,5 +1,22 @@
-$primary-bg:rgb(195, 238, 255);
+$primary-bg: rgb(195, 238, 255);
 
-body{
+body {
     background-color: $primary-bg;
+}
+
+.cssAnim1 {
+    border: 1px solid red;
+    width: 200px;
+    height: 200px;
+    display: block;
+    overflow: hidden;
+}
+
+.cssAnim1 img {
+    width: 100%;
+    transition: all .3s linear;
+}
+
+.imgScale img {
+    transform: scale(1.5);
 }
