@@ -1,34 +1,20 @@
-import $ from 'jquery'
 import { useEffect } from 'react';
+// import $ from 'jquery';
+import AOS from 'aos';
+import 'aos/dist/aos.css';
 
 export default function App() {
 
-    // 寫法1:過時的寫法
-    // useEffect(() => {
-    //     $('.cssAnim1').hover(function () {
-    //         $(this).addClass('imgScale');
-    //     }, function () {
-    //         $(this).removeClass('imgScale');
-    //     })
-    // }, [])
-
     // 寫法2:建議的寫法
-    useEffect(()=>{
-        $('.cssAnim1').on('mouseover',function(){
-            $(this).addClass('imgScale');
-        })
-
-        $('.cssAnim1').on('mouseout',function(){
-            $(this).removeClass('imgScale');
-        })
-    },[])
+    useEffect(() => {
+        AOS.init(); //初始化
+    }, [])
 
 
     return (
-        <div>
-            <a href="#" className="cssAnim1">
-                <img src="./images/03.jpg" alt="" />
-            </a>
-        </div>
+        <>
+            <h1 data-aos="zoom-in">AOS-zoom-in</h1>
+            <div className="box" data-aos="fade-up" data-aos-duration="1000">fade-up</div>
+        </>
     )
 }
