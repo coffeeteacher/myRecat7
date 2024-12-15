@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
-// import $ from 'jquery';
+
+// https://michalsnik.github.io/aos/
 import AOS from 'aos';
 import 'aos/dist/aos.css';
 
