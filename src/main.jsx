@@ -4,7 +4,6 @@ import App from './App.jsx'
 // import App from './App-1210-Navbar.jsx'
 import { BrowserRouter } from 'react-router-dom'
 import './assets/all.scss'
-// import './scss/all.scss'
 // import './App.css'
 
 ReactDOM.createRoot(document.getElementById('root')).render(

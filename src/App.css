@@ -76,3 +76,8 @@ a:hover{
     background-color: #fff;
     display: none;
 }
+body{
+    /* background-image: url("https://coffeeteacher.github.io/myRecat7/images/03.jpg"); */
+    background-image: url("./images/03.jpg");
+}
+    
