@@ -1,7 +1,8 @@
-export default function App(){
-    return (
-        <>
-            Hello            
-        </>
-    )
+export default function App() {
+  return (
+    <>
+      react App
+    </>
+  )
 }
+
