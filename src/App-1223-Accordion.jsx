@@ -32,6 +32,7 @@ export default function App() {
     ];
 
     return (
+        // 最外層
         <div style={{
             maxWidth: "100vw",
             height: "100vh",
@@ -41,6 +42,7 @@ export default function App() {
             alignItems: "center",
             // border:"1px solid red",
         }}>
+            {/* Accordion面板 */}
             <div style={{
                 width: "90%",
                 margin: "auto",
@@ -54,7 +56,6 @@ export default function App() {
                     textAlign: "center",
                     marginBottom: "6px",
                 }}>FAQ標題</h2>
-
                 {
                     // 帶出陣列中的資料
                     questions.map((q) => {
@@ -62,6 +63,7 @@ export default function App() {
                             <div key={q.id} style={{
                                 marginBottom: "4px",
                             }}>
+                                {/* QA按鈕 */}
                                 <button
                                     style={{
                                         width: "100%",
@@ -79,7 +81,7 @@ export default function App() {
                                 >
                                     {/* 帶出題目 */}
                                     {q.question}
-                                    {/* +, - 鈕的toggle */}
+                                    {/* +, - icon的toggle */}
                                     {activeQuestion === q.id ? <FaMinusCircle /> : <FaPlusCircle />}
                                 </button>
                                 {/* 折疊鈕動畫 */}
@@ -101,7 +103,6 @@ export default function App() {
                             </div>
                         )
                     })
-
                 }
             </div>
         </div>
