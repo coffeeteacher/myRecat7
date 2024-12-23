@@ -1,73 +1,55 @@
-import { useState, useEffect } from "react"
-import { FaCircleChevronLeft, FaCircleChevronRight } from "react-icons/fa6";
+import { useEffect, useState } from "react"
 
+export default function App() {
+  // 建立目前背景圖的變數
+  const [currentImgIndex, setCurrentImgIndex] = useState(0);
 
-function App() {
-  const [currentIndex, setCurrentIndex] = useState(0);
-
+  // 建立輪播圖片的陣列物件
   const slides = [
-    { url: "./images2/06.jpg" },
-    { url: "./images2/07.jpg" },
-    { url: "./images2/08.jpg" },
-    { url: "./images2/09.jpg" },
+    { url: "./images2/06.jpg", title: "photo-1" },
+    { url: "./images2/07.jpg", title: "photo-2" },
+    { url: "./images2/08.jpg", title: "photo-3" },
+    { url: "./images2/09.jpg", title: "photo-4" },
   ]
-
+  
+  // 當currentImgIndex改變時，會觸發useEffect
   useEffect(() => {
+    // 每3秒呼叫nextSlide()換下一張圖
     const autoplay = setInterval(() => {
       nextSlide();
     }, 3000);
 
+    // 每3秒後，移除autoplay，這樣才能取得最新的索引編號
     return () => clearInterval(autoplay);
-  }, [currentIndex]);
-
-  // 前一張
-  const prevSlide = () => {
-    setCurrentIndex((prevIndex) => (prevIndex === 0 ? slides.length - 1 : prevIndex - 1))
-  }
+  }, [currentImgIndex]);
 
   // 下一張
   const nextSlide = () => {
-    setCurrentIndex((prevIndex) => (prevIndex === slides.length - 1 ? 0 : prevIndex + 1))
+    // 取得前一張的索引編號，檢查是否為最後一個編號
+    // 是=>回到第一張
+    // 否=>跳到下一張
+    setCurrentImgIndex((prevIndex) => (prevIndex === slides.length - 1 ? 0 : prevIndex + 1))
   }
 
-  // 按鈕控制
-  const Arrow = ({ direction, onClick }) => (
-    <div style={{
-      position:"absolute",
-      top:"50%",
-      cursor:"pointer",
-      color:"white",
-      [direction]: "20px",
-    }}>
-      {
-        direction === "left" ? (
-          <FaCircleChevronLeft onClick={onClick} size={50} />
-        ) : (
-          <FaCircleChevronRight onClick={onClick} size={50} />
-        )
-      }
-    </div>
-  );
-
   return (
-    <div style={{
-      maxWidth: "100vw",
-      height: "100vh",
-      margin: "auto",
-    }}>
-      <div style={{
-        backgroundImage: `url(${slides[currentIndex].url})`,
-        width: "100%",
-        height: "100%",
-        backgroundSize: "cover",
-      }}></div>
-
-      {/* 上一張 */}
-      <Arrow direction="left" onClick={prevSlide} />
-      {/* 下一張 */}
-      <Arrow direction="right" onClick={nextSlide} />
-    </div>
+    <>
+      {/* 滿版最外層 */}
+      <div className="wrapper" style={{
+        maxWidth: "100vw",
+        height: "100vh",
+        margin: "auto",
+      }}>
+        {/* 滿版背景輪播區 */}
+        <div style={{
+          backgroundImage: `url(${slides[currentImgIndex].url})`,
+          width: "100%",
+          height: "100%",
+          backgroundSize: "cover",
+          margin: "auto"
+        }}>
+          <h2 style={{ color: "red" }}>{slides[currentImgIndex].title}</h2>
+        </div>
+      </div>
+    </>
   )
 }
-
-export default App
