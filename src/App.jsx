@@ -1,114 +1,64 @@
+import { createContext, useContext, useState } from "react"
 
-import { useState, useMemo } from "react";
 
 export default function App() {
+    // 建立共用環境區域
+    const UserContext = createContext({});
+    // 建立使用者變數
+    const [username, setUsername] = useState('demo');
+    // 建立登入鈕的控制
+    const [isLogin, setIsLogin] = useState(false);
 
-    const prodData = [
-        {
-            id: 1,
-            title: 'apple',
-            price: 80,
-            imgUrl: './images2/01.jpg',
-        },
-        {
-            id: 2,
-            title: '眼鏡',
-            price: 120,
-            imgUrl: './images2/02.jpg',
-        },
-        {
-            id: 3,
-            title: '冰拿鐵',
-            price: 200,
-            imgUrl: './images2/03.jpg',
-        },
-        {
-            id: 4,
-            title: 'css',
-            price: 160,
-            imgUrl: './images2/04.jpg',
-        },
-        {
-            id: 5,
-            title: '冰美式',
-            price: 120,
-            imgUrl: './images2/05.jpg',
-        },
-    ];
 
-    // 建立表格元件
-    const ProdTable = ({ filterProds }) => {
+    // 建立登入元件
+    const LoginForm = () => {
+        // 因為要被放在共用區，所以要搬到App元件內
+        // const [username, setUsername] = useState('');
+        // 從共用區UserContext解構出username, setUsername
+        const { username, setUsername, setIsLogin } = useContext(UserContext);
         return (
-            <table style={{ width: '500px', marginTop: '20px' }}>
-                <tbody>
-                    {
-                        filterProds.map((prod) => {
-                            return (
-                                <tr key={prod.id}>
-                                    <td style={{
-                                        borderBottom: '1px dashed #ccc',
-                                        padding: '5px',
-                                        width: '300px',
-                                    }}>
-                                        <img src={prod.imgUrl} alt="" style={{
-                                            width: '100px',
-                                            verticalAlign: 'top',
-                                        }} /><br />
-                                        {prod.title}
-                                    </td>
-                                    <td style={{
-                                        borderBottom: '1px dashed #ccc',
-                                        padding: '5px',
-                                        width: '200px',
-                                        textAlign: 'right',
-                                    }}>{prod.price}</td>
-                                </tr>
-                            )
-                        })
-                    }
-                </tbody>
-            </table>
+            <>
+                <label htmlFor="username">使用者名稱</label>
+                <input
+                    type="text"
+                    id="username"
+                    placeholder="請輸入使用名稱"
+                    value={username}
+                    onChange={e => setUsername(e.target.value)}
+                />
+                <button type="button" onClick={() => { setIsLogin(true) }}>登入</button>
+            </>
         )
     }
 
-    // 陣列變數，預設為原商品陣列的資料
-    const [prods, setProds] = useState(prodData)
-    // 排序變數，預設為遞增
-    const [ascending, setAscending] = useState(true);
-    // 搜尋變數
-    const [search, setSearch] = useState('');
+    // 登入後的歡迎元件
+    const Greeting = () => {
+        // 從共用區UserContext取得username
+        const { username } = useContext(UserContext);
+        return (
+            <div>
+                Hi, {username}
+            </div>
+        )
+    }
 
-    // 建立排序與搜尋的函式
-    const filterProds = useMemo(() => {
-        return [...prods]
-            .sort((a, b) => {
-                return ascending ? a.price - b.price : b.price - a.price;
-            })
-            .filter((prod) => {
-                return prod.title.match(search);
-            })
-    }, [ascending, search]);
 
     return (
         <>
-            <h1>useMemo搜尋與排序</h1>
-            <hr style={{ marginBottom: "20px" }} />
-            升降冪：
-            <input
-                type="checkbox"
-                checked={ascending}
-                onChange={(e) => setAscending(e.target.checked)}
-            />
-            <br />
-            搜尋：
-            <input
-                type="search"
-                value={search}
-                onChange={(e) => setSearch(e.target.value)}
-            />
-            {/* 呼叫表格元件 */}
-            <ProdTable filterProds={filterProds} />
+            <h1>useContext</h1><hr style={{ marginBottom: "50px" }} />
+            <UserContext.Provider value={{ username, setUsername, setIsLogin }}>
+                {/* 
+                <LoginForm />
+                <br />
+                <Greeting />
+                 */}
 
+                {/* 將原本的架構改成三元運算子 */}
+
+                {
+                    isLogin ? <Greeting /> : <LoginForm />
+                }
+            </UserContext.Provider>
         </>
     )
 }
