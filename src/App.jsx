@@ -1,8 +1,12 @@
+import { Auth } from "./component/auth"
 
 
 function App() {
   return (
-    <div>App</div>
+    <div>
+      <Auth/>
+      
+    </div>
   )
 }
 
