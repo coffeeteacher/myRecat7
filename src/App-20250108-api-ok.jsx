@@ -11,7 +11,6 @@ export default function App() {
     const [filterString, setFilterString] = useState('cafe');
     // 建立列表用的陣列
     const [jsonData, setJsonData] = useState([]);
-
     // 讀取變數
     const isLoading = useRef(false);
     // 目前頁數
@@ -41,19 +40,7 @@ export default function App() {
             // 1秒鐘後取消寫入
             setTimeout(() => {
                 isLoading.current = false;
-            }, 1000);
-
-            /*
-            console.log(`${api}?client_id=${accessKey}&query=${filterString}`);
-            // 發出請求給遠端api，傳回結果
-            const result = await axios.get(`${api}?client_id=${accessKey}&query=${filterString}`);
-            // 全部資料
-            // console.log(result);
-            // 顯示10筆記錄
-            console.log(result.data.results);
-            // 更新陣列列表資料
-            setJsonData(result.data.results);
-            */
+            }, 1000);            
         } catch (error) {
             // 錯誤發生時，顯示訊息
             console.log(error);
@@ -92,7 +79,6 @@ export default function App() {
             setFilterString(e.target.value);
         }
     }
-
 
     // 列表高度
     const listRef = useRef(null);
