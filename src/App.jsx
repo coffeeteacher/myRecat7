@@ -67,7 +67,7 @@ export default function App() {
     const ShowPhoto = () => {
         console.log(jsonData);
         return (
-            jsonData.map((item,index) => {
+            jsonData.map((item, index) => {
                 return (
                     <div key={index}>
                         <img src={item.urls.regular} alt="" width="400" height="320" style={{ objectFit: "cover" }} />
