@@ -33,10 +33,10 @@ export default function App() {
                 // 假如是新的關鍵字，則回傳新的關鍵字結果
                 if (isNew) {
                     return [...result.data.results];
+                } else {
+                    // 先前的資料+當前的資料
+                    return [...preData, ...result.data.results];
                 }
-                // 先前的資料+當前的資料
-                return [...preData, ...result.data.results];
-
             });
 
             // 更新頁數
@@ -67,7 +67,7 @@ export default function App() {
     const ShowPhoto = () => {
         console.log(jsonData);
         return (
-            jsonData.map((item, index) => {
+            jsonData.map((item,index) => {
                 return (
                     <div key={index}>
                         <img src={item.urls.regular} alt="" width="400" height="320" style={{ objectFit: "cover" }} />
