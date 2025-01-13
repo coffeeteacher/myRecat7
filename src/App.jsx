@@ -8,64 +8,84 @@ export default function App() {
 
     const api = 'https://api.unsplash.com/search/photos';
     const accessKey = '0p99NnZvvO3vGtqrypmaM-LvsICLJSlhFN11Wl20y2M';
-    const [filterString, setFilterString] = useState('cafe');
+    const [filterString, setFilterString] = useState('coffee');
     // 建立列表用的陣列
     const [jsonData, setJsonData] = useState([]);
-
     // 讀取變數
     const isLoading = useRef(false);
-    // 目前頁數
+    // 頁數
     const currentPage = useRef(1);
 
-    // 將getPhotos獨立出來，並取得特定頁數
-    // 建立非同步方法，取得遠端資料    
-    const getPhotos = async (page = 1, isNew = true) => {
-        // 避免執行中發生錯誤，可以改用try{...}catch{...}
+    // 列表高度
+    const listRef = useRef(null);
+    // 避免重新渲染，所有寫在useEffect中
+    useEffect(() => {
+        getPhotos(1, true);
+
+        // 滾動監聽函式
+        const scrollEvent = () => {
+            // console.dir(listRef.current);
+            // console.log('listRef.current.offsetHeight:',listRef.current.offsetHeight);
+            // console.log('listRef.current.offsetTop:',listRef.current.offsetTop);
+
+            // 取得目前圖片列表的高度
+            const height = (listRef.current.offsetHeight + listRef.current.offsetTop) - window.innerHeight;
+            // 
+            if (!isLoading.current && window.scrollY >= height) {
+                // 頁數+1
+                currentPage.current++;
+                // 同一個關鍵字的資料不用覆盖，所以補上false
+                getPhotos(currentPage.current, false);
+            }
+        }
+
+        // 滾動監聽
+        window.addEventListener('scroll', scrollEvent);
+        // 移除監聽
+        return () => window.removeEventListener('scroll', scrollEvent);
+
+    }, [filterString]);
+
+    // 建立非同步方法，取得遠端資料
+    const getPhotos = async (page, isNew) => {
         try {
-            // 取得圖片前先寫入
             isLoading.current = true;
-            // 發出請求給遠端api，包含頁數，傳回結果
-            const result = await axios.get(`${api}?client_id=${accessKey}&query=${filterString}&page=${page}`);
-            // console.log(result);
-
-            // 由於加上頁數，不斷覆蓋，所以要保存之前的結果
-            setJsonData((preData) => {
-                // 假如是新的關鍵字，則回傳新的關鍵字結果
-                if (isNew) {
-                    return [...result.data.results];
-                } else {
-                    // 先前的資料+當前的資料
-                    return [...preData, ...result.data.results];
-                }
-            });
-
-            // 更新頁數
-            currentPage.current = page;
-            // 1秒鐘後取消寫入
-            setTimeout(() => {
-                isLoading.current = false;
-            }, 1000);
-
-            /*
-            console.log(`${api}?client_id=${accessKey}&query=${filterString}`);
+            // console.log(`${api}?client_id=${accessKey}&query=${filterString}`);
             // 發出請求給遠端api，傳回結果
             const result = await axios.get(`${api}?client_id=${accessKey}&query=${filterString}`);
             // 全部資料
             // console.log(result);
             // 顯示10筆記錄
-            console.log(result.data.results);
+            // console.log(result.data.results);
             // 更新陣列列表資料
-            setJsonData(result.data.results);
-            */
+            // 只會保存當前頁的資料
+            // setJsonData(result.data.results);
+            // 若要保存不同頁的資料，就要加上...展開語法
+            setJsonData((preData) => {
+                // 是否為新的關鍵字，若為新的關鍵字，則覆蓋目前的關鍵字結果
+                if (isNew) {
+                    return [...result.data.results]
+                }
+                // 先前的資料+當前的資料
+                return [...preData, ...result.data.results];
+            });
+
+            // 更新頁數
+            currentPage.current = page;
+
+            // 1秒鐘後取消寫入
+            setTimeout(() => {
+                isLoading.current = false;
+            }, 1000);
+
         } catch (error) {
             // 錯誤發生時，顯示訊息
             console.log(error);
         }
     }
 
-    // 建立顯示圖片元件    
+    // 建立顯示圖片元件
     const ShowPhoto = () => {
-        console.log(jsonData);
         return (
             jsonData.map((item, index) => {
                 return (
@@ -80,51 +100,27 @@ export default function App() {
     // 建立搜尋列元件
     const SearchBox = ({ onSearchHandler, filterString }) => {
         return (
-            <div style={{ textAlign: "center", margin: "50px 0" }}>
-                <label htmlFor="filter">Search</label>
+            <div
+                style={{
+                    textAlign: "center",
+                    margin: "50px 0"
+                }}
+            >
+                <label htmlFor="filter">請輸入搜尋文字</label>
                 <input type="text" id="filter"
                     defaultValue={filterString}
-                    onKeyDown={onSearchHandler}
+                    onKeyUp={onSearchHandler}
                 />
             </div>
         )
     }
 
-    // 按下Enter鍵更改資料
+    // 按下Enter鍵時，更改filterString資料的函式
     const onSearchHandler = (e) => {
         if (e.key === 'Enter') {
             setFilterString(e.target.value);
         }
     }
-
-
-    // 列表高度
-    const listRef = useRef(null);
-    // 避免重新渲染，所有寫在useEffect中
-    useEffect(() => {
-        getPhotos(1, true);
-
-        // 滾動監聽函式
-        const scrollEvent = () => {
-            // 查看listRef的成員
-            // console.dir(listRef.current);
-            // 目前圖片列表高度
-            const height = (listRef.current.offsetHeight + listRef.current.offsetTop) - window.innerHeight;
-            // 假如(沒有載入圖片)且(垂直捲軸位置>=目前圖片列表高度)，則顯示下一頁內容
-            if (!isLoading.current && window.scrollY >= height) {
-                // 頁數+1
-                currentPage.current++;
-                // 同一個關鍵字的資料不用覆蓋(要保留)，所以補上false
-                getPhotos(currentPage.current, false);
-            }
-        }
-
-        // 滾動監聽
-        window.addEventListener('scroll', scrollEvent);
-        // 移除監聽（確保每次捲動時，位置與資料是正確的）
-        return () => window.removeEventListener('scroll', scrollEvent);
-
-    }, [filterString]);
 
     // 渲染時使用JSX語法，若要使用JS語法，前後加{}
     return (
